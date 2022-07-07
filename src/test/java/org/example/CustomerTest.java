@@ -2,6 +2,7 @@ package org.example;
 
 import org.example.dao.CustomerDAO;
 import org.example.entity.Customer;
+import org.example.utils.Gender;
 import org.junit.Test;
 import java.util.List;
 import static org.junit.Assert.*;
@@ -134,5 +135,18 @@ public class CustomerTest
                 assertTrue(false);
             }
         }
+    }
+
+    @Test
+    public void createCustomerWithGender()
+    {
+        Customer customer = new Customer();
+        customer.setFirstName("Alain");
+        customer.setLastName("Delon");
+        customer.setGender(Gender.MALE);
+
+        CustomerDAO.createCustomer(customer);
+
+        assertTrue( true );
     }
 }

@@ -1,5 +1,6 @@
 package org.example.entity;
 
+import org.example.utils.Gender;
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -27,6 +28,9 @@ public class Customer {
     private String country;
     private Integer state;
 
+    // Valeurs attendues (grace à l'enum "gender") : 0:male, 1:female, 2:other
+    private Gender gender;
+
     // On considère ici qu'un client ne peut avoir qu'une carte bleue
     @OneToOne
     @JoinColumn(name = "payment_id")
@@ -45,6 +49,7 @@ public class Customer {
     @ManyToMany
     private List<Product> products = new ArrayList<>();
 
+
     public Customer() {
     }
 
@@ -52,9 +57,10 @@ public class Customer {
         this.firstName = firstName;
     }
 
+
     public Customer(Long id, String companyName, String firstName, String lastName, String phone,
                     String email, String address, String zipCode, String city, String country,
-                    Integer state, Payment payment, Address deliveryAddress, List<Product> products) {
+                    Integer state, Payment payment, Address deliveryAddress, List<Product> products, Gender gender) {
         this.id = id;
         this.companyName = companyName;
         this.firstName = firstName;
@@ -69,7 +75,9 @@ public class Customer {
         this.payment = payment;
         this.deliveryAddress = deliveryAddress;
         this.products = products;
+        this.gender = gender;
     }
+
 
     public Long getId() {
         return id;
@@ -183,6 +191,15 @@ public class Customer {
         this.products = products;
     }
 
+    public Gender getGender() {
+        return gender;
+    }
+
+    public void setGender(Gender gender) {
+        this.gender = gender;
+    }
+
+
     public void addProduct(Product product) {
         this.products.add(product);
     }
@@ -240,6 +257,6 @@ public class Customer {
                 ", lastName='" + lastName + '\'' + ", phone='" + phone + '\'' + ", email='" + email + '\'' +
                 ", address='" + address + '\'' + ", zipCode='" + zipCode + '\'' + ", city='" + city + '\'' +
                 ", country='" + country + '\'' + ", state=" + state + ", payment=" + payment +
-                ", deliveryAddress=" + deliveryAddress + ", product=" + products + '}';
+                ", deliveryAddress=" + deliveryAddress + ", products=" + products + ", gender=" + gender + '}';
     }
 }
