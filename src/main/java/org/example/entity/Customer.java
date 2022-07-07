@@ -10,20 +10,33 @@ public class Customer {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name="company_name")
+    @Column(name = "company_name")
     private String companyName;
-    @Column(name="first_name")
+    @Column(name = "first_name")
     private String firstName;
-    @Column(name="last_name")
+    @Column(name = "last_name")
     private String lastName;
     private String phone;
     private String email;
     private String address;
-    @Column(name="zip_code")
+    @Column(name = "zip_code")
     private String zipCode;
     private String city;
     private String country;
     private Integer state;
+
+    // On considère ici qu'un client ne peut avoir qu'une carte bleue
+    @OneToOne
+    @JoinColumn(name = "payment_id")
+    private Payment payment;
+
+    // On considère ici que plusieurs clients peuvent avoir la même adresse de livraison
+    // Many/Plusieurs clients To/Pour One/Une même adresse de livraison
+    // (le premier mot correspond à la classe dans laquelle on met l'annotation)
+    // Mais ici on considère qu'un client ne peut avoir qu'une seule adresse de livraison (pas de ManyToMany)
+    @ManyToOne
+    @JoinColumn(name = "delivery_address_id")
+    private Address deliveryAddress;
 
     public Customer() {
     }
@@ -33,7 +46,8 @@ public class Customer {
     }
 
     public Customer(Long id, String companyName, String firstName, String lastName, String phone,
-                    String email, String address, String zipCode, String city, String country, Integer state) {
+                    String email, String address, String zipCode, String city, String country,
+                    Integer state, Payment payment, Address deliveryAddress) {
         this.id = id;
         this.companyName = companyName;
         this.firstName = firstName;
@@ -45,6 +59,8 @@ public class Customer {
         this.city = city;
         this.country = country;
         this.state = state;
+        this.payment = payment;
+        this.deliveryAddress = deliveryAddress;
     }
 
     public Long getId() {
@@ -135,49 +151,65 @@ public class Customer {
         this.state = state;
     }
 
+    public Payment getPayment() {
+        return payment;
+    }
+
+    public void setPayment(Payment payment) {
+        this.payment = payment;
+    }
+
+    public Address getDeliveryAddress() {
+        return deliveryAddress;
+    }
+
+    public void setDeliveryAddress(Address deliveryAddress) {
+        this.deliveryAddress = deliveryAddress;
+    }
+
     public void setNotNullData(Customer newCustomerData) {
 
-        if(newCustomerData.getCompanyName() != null) {
+        if (newCustomerData.getCompanyName() != null) {
             this.setCompanyName(newCustomerData.getCompanyName());
         }
 
-        if(newCustomerData.getFirstName() != null) {
+        if (newCustomerData.getFirstName() != null) {
             this.setFirstName(newCustomerData.getFirstName());
         }
 
-        if(newCustomerData.getLastName() != null) {
+        if (newCustomerData.getLastName() != null) {
             this.setLastName(newCustomerData.getLastName());
         }
 
-        if(newCustomerData.getFirstName() != null) {
+        if (newCustomerData.getFirstName() != null) {
             this.setFirstName(newCustomerData.getFirstName());
         }
 
-        if(newCustomerData.getPhone() != null) {
+        if (newCustomerData.getPhone() != null) {
             this.setPhone(newCustomerData.getPhone());
         }
 
-        if(newCustomerData.getEmail() != null) {
+        if (newCustomerData.getEmail() != null) {
             this.setEmail(newCustomerData.getEmail());
         }
 
-        if(newCustomerData.getAddress() != null) {
+        if (newCustomerData.getAddress() != null) {
             this.setAddress(newCustomerData.getAddress());
         }
 
-        if(newCustomerData.getZipCode() != null) {
+        if (newCustomerData.getZipCode() != null) {
             this.setZipCode(newCustomerData.getZipCode());
         }
 
-        if(newCustomerData.getCity() != null) {
+        if (newCustomerData.getCity() != null) {
             this.setCity(newCustomerData.getCity());
         }
 
-        if(newCustomerData.getCountry() != null) {
+        if (newCustomerData.getCountry() != null) {
             this.setCountry(newCustomerData.getCountry());
         }
 
-        if(newCustomerData.getState() != null) {
+        if (newCustomerData.getState() != null) {
             this.setState(newCustomerData.getState());
         }
     }
@@ -187,6 +219,7 @@ public class Customer {
         return "Customer{" + "id=" + id + ", companyName='" + companyName + '\'' + ", firstName='" + firstName + '\'' +
                 ", lastName='" + lastName + '\'' + ", phone='" + phone + '\'' + ", email='" + email + '\'' +
                 ", address='" + address + '\'' + ", zipCode='" + zipCode + '\'' + ", city='" + city + '\'' +
-                ", country='" + country + '\'' + ", state=" + state + '}';
+                ", country='" + country + '\'' + ", state=" + state + ", payment=" + payment +
+                ", deliveryAddress=" + deliveryAddress + '}';
     }
 }
