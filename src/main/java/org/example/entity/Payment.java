@@ -1,7 +1,5 @@
 package org.example.entity;
 
-import com.sun.tools.javac.api.ClientCodeWrapper;
-
 import javax.persistence.*;
 
 @Entity
@@ -12,16 +10,11 @@ public class Payment {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @ManyToOne
-    @Column(name = "id_client")
-    private Customer customer;
-
     @Column(name = "card_number")
     private String cardNumber;
     @Column(name = "confidential_code")
     private String confidentialCode;
     private String bank;
-
 
     public Payment() {
     }
@@ -31,7 +24,6 @@ public class Payment {
         this.cardNumber = cardNumber;
         this.confidentialCode = confidentialCode;
         this.bank = bank;
-        this.customer = customer;
     }
 
     public Long getId() {
@@ -66,19 +58,7 @@ public class Payment {
         this.bank = bank;
     }
 
-    public Customer getCustomer() {
-        return customer;
-    }
-
-    public void setCustomer(Customer customer) {
-        this.customer = customer;
-    }
-
     public void setNotNullData(Payment newPaymentData) {
-
-        if(newPaymentData.getCustomer() != null) {
-            this.setCustomer(newPaymentData.getCustomer());
-        }
 
         if(newPaymentData.getCardNumber() != null) {
             this.setCardNumber(newPaymentData.getCardNumber());
@@ -97,6 +77,6 @@ public class Payment {
     public String toString() {
         return "Payment{" + "id=" + id + ", cardNumber='" + cardNumber + '\'' +
                 ", confidentialCode='" + confidentialCode + '\'' + ", bank='" + bank + '\'' +
-                ", customer=" + customer + '}';
+                ", customer=" + '}';
     }
 }

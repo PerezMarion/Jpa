@@ -3,12 +3,10 @@ package org.example;
 import org.example.dao.CustomerDAO;
 import org.example.entity.Customer;
 import org.junit.Test;
-
 import java.util.List;
-
 import static org.junit.Assert.*;
 
-public class AppTest
+public class CustomerTest
 {
     @Test
     public void createCustomer()
@@ -54,13 +52,13 @@ public class AppTest
 
     @Test
     public void deleteCustomer(){
-        Customer marie = new Customer("Marie");
-        CustomerDAO.createCustomer(marie);
+        Customer customer = new Customer("Marie");
+        CustomerDAO.createCustomer(customer);
 
         List<Customer> customers = CustomerDAO.findAllCustomers();
         assertEquals(1, customers.size());
 
-        CustomerDAO.deleteCustomer(marie);
+        CustomerDAO.deleteCustomer(customer);
 
         customers = CustomerDAO.findAllCustomers();
         assertEquals(0, customers.size());

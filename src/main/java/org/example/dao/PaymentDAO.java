@@ -3,7 +3,6 @@ package org.example.dao;
 import org.example.entity.Customer;
 import org.example.entity.Payment;
 import org.example.jpa.EntityManagerSingleton;
-
 import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
