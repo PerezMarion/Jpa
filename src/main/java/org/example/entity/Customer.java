@@ -23,7 +23,7 @@ public class Customer {
     private String zipCode;
     private String city;
     private String country;
-    private int state;
+    private Integer state;
 
     public Customer() {
     }
@@ -33,7 +33,7 @@ public class Customer {
     }
 
     public Customer(Long id, String companyName, String firstName, String lastName, String phone,
-                    String email, String address, String zipCode, String city, String country, int state) {
+                    String email, String address, String zipCode, String city, String country, Integer state) {
         this.id = id;
         this.companyName = companyName;
         this.firstName = firstName;
@@ -127,11 +127,66 @@ public class Customer {
         this.zipCode = zipCode;
     }
 
-    public int getState() {
+    public Integer getState() {
         return state;
     }
 
-    public void setState(int state) {
+    public void setState(Integer state) {
         this.state = state;
+    }
+
+    public void setNotNullData(Customer newCustomerData) {
+
+        if(newCustomerData.getCompanyName() != null) {
+            this.setCompanyName(newCustomerData.getCompanyName());
+        }
+
+        if(newCustomerData.getFirstName() != null) {
+            this.setFirstName(newCustomerData.getFirstName());
+        }
+
+        if(newCustomerData.getLastName() != null) {
+            this.setLastName(newCustomerData.getLastName());
+        }
+
+        if(newCustomerData.getFirstName() != null) {
+            this.setFirstName(newCustomerData.getFirstName());
+        }
+
+        if(newCustomerData.getPhone() != null) {
+            this.setPhone(newCustomerData.getPhone());
+        }
+
+        if(newCustomerData.getEmail() != null) {
+            this.setEmail(newCustomerData.getEmail());
+        }
+
+        if(newCustomerData.getAddress() != null) {
+            this.setAddress(newCustomerData.getAddress());
+        }
+
+        if(newCustomerData.getZipCode() != null) {
+            this.setZipCode(newCustomerData.getZipCode());
+        }
+
+        if(newCustomerData.getCity() != null) {
+            this.setCity(newCustomerData.getCity());
+        }
+
+        if(newCustomerData.getCountry() != null) {
+            this.setCountry(newCustomerData.getCountry());
+        }
+
+        if(newCustomerData.getState() != null) {
+            this.setState(newCustomerData.getState());
+        }
+    }
+
+    @Override
+    public String toString() {
+        return "Customer{" + "id=" + id + ", companyName='" + companyName + '\'' + ", firstName='" + firstName + '\'' +
+                ", lastName='" + lastName + '\'' + ", phone='" + phone + '\'' + ", email='" + email + '\'' +
+                ", address='" + address + '\'' + ", zipCode='" + zipCode + '\'' + ", city='" + city + '\'' +
+                ", country='" + country + '\'' + ", state=" + state + '}';
     }
 }

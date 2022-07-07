@@ -1,6 +1,7 @@
 package org.example.dao;
 
 import org.example.entity.Customer;
+import org.example.entity.Payment;
 import org.example.jpa.EntityManagerSingleton;
 
 import javax.persistence.EntityManager;
@@ -8,69 +9,70 @@ import javax.persistence.EntityTransaction;
 import javax.persistence.Query;
 import java.util.List;
 
-public class CustomerDAO {
-    public static void createCustomer(Customer customerToCreate) {
+public class PaymentDAO {
+
+    public static void createPayment(Payment paymentToCreate) {
 
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
         EntityTransaction tx = entityManager.getTransaction();
         tx.begin();
-        entityManager.persist(customerToCreate);
+        entityManager.persist(paymentToCreate);
         tx.commit();
     }
 
-    public static Customer findCustomerById(Long id) {
+    public static Payment findPaymentById(Long id) {
 
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
-        Customer customer = entityManager.find(Customer.class, id);
-        return customer;
+        Payment payment = entityManager.find(Payment.class, id);
+        return payment;
     }
 
-    public static List<Customer> findAllCustomers() {
+    public static List<Payment> findAllPayments() {
 
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
         Query findAllQuery = entityManager.createQuery
-                ("select c from Customer c");
+                ("select p from Payment p");
         return findAllQuery.getResultList();
     }
 
-    public static void deleteCustomer(Customer customer) {
+    public static void deletePayment(Payment payment) {
 
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
         EntityTransaction tx = entityManager.getTransaction();
         tx.begin();
-        entityManager.remove(customer);
+        entityManager.remove(payment);
         tx.commit();
     }
 
-    public static void deleteCustomerById(Long id) {
+    public static void deletePaymentById(Long id) {
 
-        Customer customerToDelete = findCustomerById(id);
-        deleteCustomer(customerToDelete);
+       Payment paymentToDelete = findPaymentById(id);
+        deletePayment(paymentToDelete);
     }
 
-    public static void updateCustomer(Long id, Customer newCustomerData) {
+    public static void updatePayment(Long id, Payment newPaymentData) {
 
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
-        Customer customerToUpdate = entityManager.find(Customer.class, id);
-        customerToUpdate.setNotNullData(newCustomerData);
+        Payment paymentToUpdate = entityManager.find(Payment.class, id);
+        paymentToUpdate.setNotNullData(newPaymentData);
 
         EntityTransaction tx = null;
 
         try {
             tx = entityManager.getTransaction();
             tx.begin();
-            entityManager.merge(customerToUpdate);
+            entityManager.merge(paymentToUpdate);
             tx.commit();
         } catch (Exception e) {
             tx.rollback();
         }
     }
 
-    public static List<Customer> findCustomerByFirstName(String firstName) {
+    public static List<Payment> findPaymentByCustomer(Customer customer) {
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
 
-        Query queryToFindCustomerByFirstName = entityManager.createQuery("select c from Customer c where c.firstName = :firstName");
-        queryToFindCustomerByFirstName.setParameter("firstName", firstName);
-        return queryToFindCustomerByFirstName.getResultList();
+        Query queryToFindPaymentByCustomer = entityManager.createQuery("select p from Payment p where p.customer = :customer");
+        queryToFindPaymentByCustomer.setParameter("customer", customer);
+        return queryToFindPaymentByCustomer.getResultList();
     }
 }
