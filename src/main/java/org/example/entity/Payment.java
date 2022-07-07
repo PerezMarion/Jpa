@@ -76,7 +76,6 @@ public class Payment {
     @Override
     public String toString() {
         return "Payment{" + "id=" + id + ", cardNumber='" + cardNumber + '\'' +
-                ", confidentialCode='" + confidentialCode + '\'' + ", bank='" + bank + '\'' +
-                ", customer=" + '}';
+                ", confidentialCode='" + confidentialCode + '\'' + ", bank='" + bank + '\'' + '}';
     }
 }

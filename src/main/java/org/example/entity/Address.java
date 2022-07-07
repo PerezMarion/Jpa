@@ -16,6 +16,17 @@ public class Address {
     @Column(name="zip_code")
     private String zipCode;
 
+    public Address() {
+    }
+
+    public Address(Long id, String street, String city, String country, String zipCode) {
+        this.id = id;
+        this.street = street;
+        this.city = city;
+        this.country = country;
+        this.zipCode = zipCode;
+    }
+
     public Long getId() {
         return id;
     }
@@ -54,5 +65,11 @@ public class Address {
 
     public void setZipCode(String zipCode) {
         this.zipCode = zipCode;
+    }
+
+    @Override
+    public String toString() {
+        return "Address{" + "id=" + id + ", street='" + street + '\'' + ", city='" + city + '\'' +
+                ", country='" + country + '\'' + ", zipCode='" + zipCode + '\'' + '}';
     }
 }

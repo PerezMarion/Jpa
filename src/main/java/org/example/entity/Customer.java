@@ -1,6 +1,8 @@
 package org.example.entity;
 
 import javax.persistence.*;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Table(name = "customers")
@@ -38,6 +40,11 @@ public class Customer {
     @JoinColumn(name = "delivery_address_id")
     private Address deliveryAddress;
 
+    // On considère ici qu'un produit peut être acheté par plusieurs clients et qu'un client peut acheter
+    // plusieurs fois le même produit
+    @ManyToMany
+    private List<Product> products = new ArrayList<>();
+
     public Customer() {
     }
 
@@ -47,7 +54,7 @@ public class Customer {
 
     public Customer(Long id, String companyName, String firstName, String lastName, String phone,
                     String email, String address, String zipCode, String city, String country,
-                    Integer state, Payment payment, Address deliveryAddress) {
+                    Integer state, Payment payment, Address deliveryAddress, List<Product> products) {
         this.id = id;
         this.companyName = companyName;
         this.firstName = firstName;
@@ -61,6 +68,7 @@ public class Customer {
         this.state = state;
         this.payment = payment;
         this.deliveryAddress = deliveryAddress;
+        this.products = products;
     }
 
     public Long getId() {
@@ -167,6 +175,18 @@ public class Customer {
         this.deliveryAddress = deliveryAddress;
     }
 
+    public List<Product> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Product> products) {
+        this.products = products;
+    }
+
+    public void addProduct(Product product) {
+        this.products.add(product);
+    }
+
     public void setNotNullData(Customer newCustomerData) {
 
         if (newCustomerData.getCompanyName() != null) {
@@ -220,6 +240,6 @@ public class Customer {
                 ", lastName='" + lastName + '\'' + ", phone='" + phone + '\'' + ", email='" + email + '\'' +
                 ", address='" + address + '\'' + ", zipCode='" + zipCode + '\'' + ", city='" + city + '\'' +
                 ", country='" + country + '\'' + ", state=" + state + ", payment=" + payment +
-                ", deliveryAddress=" + deliveryAddress + '}';
+                ", deliveryAddress=" + deliveryAddress + ", product=" + products + '}';
     }
 }
