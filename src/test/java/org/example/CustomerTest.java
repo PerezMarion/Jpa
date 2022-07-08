@@ -82,6 +82,31 @@ public class CustomerTest
     }
 
     @Test
+    public void deleteCustomerByIdV2() {
+        Customer marie = new Customer("Marie");
+        CustomerDAO.createCustomer(marie);
+        Customer michel = new Customer("Michel");
+        CustomerDAO.createCustomer(michel);
+        Long michelId = michel.getId();
+        Customer alex = new Customer("Alex");
+        CustomerDAO.createCustomer(alex);
+
+        CustomerDAO.deleteCustomerByIdV2(michel.getId());
+
+        assertNull(CustomerDAO.findCustomerById(michelId));
+        assertNotNull(CustomerDAO.findCustomerById(marie.getId()));
+        assertNotNull(CustomerDAO.findCustomerById(alex.getId()));
+
+        for(Customer c : CustomerDAO.findAllCustomers()){
+            System.out.println(c);
+        }
+
+        System.out.println(michelId);
+        Customer c = CustomerDAO.findCustomerById(michelId);
+        System.out.println(c);
+    }
+
+    @Test
     public void updateCustomer() {
         Customer customer = new Customer();
         customer.setCompanyName("Sopra Steria");

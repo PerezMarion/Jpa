@@ -47,6 +47,19 @@ public class CustomerDAO {
         deleteCustomer(customerToDelete);
     }
 
+    public static void deleteCustomerByIdV2(Long id) {
+        EntityManager entityManager = EntityManagerSingleton.getEntityManager();
+        EntityTransaction tx = entityManager.getTransaction();
+        tx.begin();
+
+        Query deleteQuery = entityManager.createQuery("delete from Customer c where c.id= :id");
+        deleteQuery.setParameter("id", id);
+        int result = deleteQuery.executeUpdate();
+        entityManager.clear();
+
+        tx.commit();
+    }
+
     public static void updateCustomer(Long id, Customer newCustomerData) {
 
         EntityManager entityManager = EntityManagerSingleton.getEntityManager();
